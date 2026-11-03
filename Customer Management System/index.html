@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NigerToday - Subscription Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- LOGIN PAGE VIEW -->
+    <section id="login-view" class="view-section active">
+        <div class="login-wrapper">
+            <!-- Banner Image Section -->
+            <div class="login-banner">
+                <div class="banner-overlay">
+                    <div class="brand-logo-tv">
+                        <span class="globe">🌍📺</span>
+                        <h2>Niger<span class="red">today</span></h2>
+                    </div>
+                    <h1>Know who to call today.</h1>
+                    <p>Track every customer subscription, see who is expiring, and send renewal reminders in one place.</p>
+                    
+                    <div class="banner-stats">
+                        <div class="stat-pill green"><span>24</span> customers active</div>
+                        <div class="stat-pill orange"><span>4</span> expiring this month</div>
+                        <div class="stat-pill red"><span>2</span> expired — follow up</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Login Form Section -->
+            <div class="login-form-container">
+                <div class="login-box">
+                    <h2>Welcome back</h2>
+                    <p class="sub-title">Log in to manage your customers.</p>
+                    
+                    <form onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label>Email or username</label>
+                            <input type="text" placeholder="owner@email.com" value="owner@email.com" required>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 15px;">
+                            <label>Password</label>
+                            <input type="password" placeholder="Enter your password" value="12345678" required>
+                        </div>
+                        
+                        <div class="forgot-pass">
+                            <a href="#">Forgot password?</a>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary-block">Log in</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD & MAIN APP AREA -->
+    <div id="app-workspace" class="app-container" style="display: none;">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <span class="globe">🌍📺</span>
+                <span class="brand-name">Niger<span class="red">today</span></span>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li id="nav-dashboard" class="active" onclick="switchView('dashboard')">
+                    <a href="#">🏠 Dashboard</a>
+                </li>
+                <li id="nav-customers" onclick="switchView('customers')">
+                    <a href="#">👥 Customers</a>
+                </li>
+                <li id="nav-expiring" onclick="switchView('expiring')">
+                    <a href="#">🕒 Expiring <span class="badge orange">4</span></a>
+                </li>
+                <li id="nav-expired" onclick="switchView('expired')">
+                    <a href="#">⚠️ Expired <span class="badge red">2</span></a>
+                </li>
+                <li id="nav-settings" onclick="switchView('settings')">
+                    <a href="#">⚙️ Settings</a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="avatar">AO</div>
+                <div class="user-details">
+                    <h4>Alex Owner</h4>
+                    <p>Owner</p>
+                </div>
+                <button class="logout-btn" onclick="handleLogout()" title="Log out">🚪</button>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- DASHBOARD VIEW -->
+            <section id="dashboard-view" class="workspace-section active">
+                <header class="top-bar">
+                    <div>
+                        <h1>Dashboard</h1>
+                        <p class="date-sub">Monday, October 5, 2026 · Here is who needs your attention today</p>
+                    </div>
+                    <div class="header-right">
+                        <div class="search-bar">
+                            <i>🔍</i>
+                            <input type="text" placeholder="Search name, phone or email">
+                        </div>
+                        <button class="btn-primary" onclick="switchView('add-customer')">+ Add Customer</button>
+                    </div>
+                </header>
+
+                <div class="alert-banner">
+                    <div class="alert-text">
+                        <span>⚠️</span> 
+                        <p>6 customers need your attention — 4 expire within 10 days and 2 have already expired.</p>
+                    </div>
+                    <button class="btn-review" onclick="switchView('expiring')">Review now</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card" onclick="switchView('customers')" style="cursor:pointer;">
+                        <span class="card-title">Total customers</span>
+                        <h2>30</h2>
+                        <p class="card-hint">All saved customers</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="card-header-top">
+                            <span class="card-title">Active</span>
+                            <span class="icon-badge green">✓</span>
+                        </div>
+                        <h2 class="text-green">24</h2>
+                        <p class="card-hint">More than 10 days left</p>
+                    </div>
+                    <div class="stat-card" onclick="switchView('expiring')" style="cursor:pointer;">
+                        <div class="card-header-top">
+                            <span class="card-title">Expiring soon</span>
+                            <span class="icon-badge orange">🕒</span>
+                        </div>
+                        <h2 class="text-orange">4</h2>
+                        <p class="card-hint">Within the next 10 days</p>
+                    </div>
+                    <div class="stat-card" onclick="switchView('expired')" style="cursor:pointer;">
+                        <div class="card-header-top">
+                            <span class="card-title">Expired</span>
+                            <span class="icon-badge red">⚠️</span>
+                        </div>
+                        <h2 class="text-red">2</h2>
+                        <p class="card-hint">Follow up to renew</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CUSTOMERS VIEW -->
+            <section id="customers-view" class="workspace-section">
+                <header class="top-bar">
+                    <div>
+                        <h1 id="table-title">Customers</h1>
+                        <p class="date-sub" id="table-subtitle">30 customers · Manage subscriptions and renewals</p>
+                    </div>
+                    <div class="header-right">
+                        <button class="btn-primary" onclick="switchView('add-customer')">+ Add Customer</button>
+                    </div>
+                </header>
+
+                <div class="filter-tabs">
+                    <button class="filter-btn active" onclick="loadCustomerData('all')">All</button>
+                    <button class="filter-btn" onclick="loadCustomerData('expiring')">Expiring Soon</button>
+                    <button class="filter-btn" onclick="loadCustomerData('expired')">Expired</button>
+                </div>
+
+                <div class="table-card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>CUSTOMER</th>
+                                <th>PHONE</th>
+                                <th>START DATE</th>
+                                <th>DURATION</th>
+                                <th>EXPIRES</th>
+                                <th>STATUS</th>
+                                <th>ACTIONS</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customer-table-body">
+                            <!-- JS Dynamically loads table data -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- CUSTOMER DETAIL VIEW -->
+            <section id="detail-view" class="workspace-section">
+                <div class="back-link" onclick="switchView('customers')">← Customers</div>
+                <div class="detail-header-card">
+                    <div class="avatar-lg">JS</div>
+                    <div>
+                        <h2>John Smith <span class="status-badge orange">Expiring · 3 days left</span></h2>
+                        <p class="date-sub">Customer since Apr 8, 2026</p>
+                    </div>
+                </div>
+
+                <div class="time-remaining-card">
+                    <p class="date-sub">Time remaining</p>
+                    <h1>3 days left</h1>
+                    <div class="progress-bar"><div class="progress-fill"></div></div>
+                </div>
+
+                <div class="info-list-card">
+                    <div class="info-row"><span>Start date</span> <strong>Jul 8, 2026</strong></div>
+                    <div class="info-row"><span>Duration</span> <strong>3 months</strong></div>
+                    <div class="info-row"><span>Expires</span> <strong>Oct 8, 2026</strong></div>
+                    <div class="info-row"><span>Phone</span> <strong>+1 555 012 3456</strong></div>
+                    <div class="info-row"><span>Email</span> <strong>john@email.com</strong></div>
+                </div>
+
+                <div class="detail-actions">
+                    <button class="btn-primary" onclick="openModal('renew-modal')">🔄 Renew Subscription</button>
+                    <button class="btn-secondary" onclick="openModal('reminder-modal')">💬 Send Reminder</button>
+                    <button class="btn-danger" onclick="openModal('delete-modal')">🗑️ Delete customer</button>
+                </div>
+            </section>
+
+            <!-- ADD CUSTOMER VIEW -->
+            <section id="add-customer-view" class="workspace-section">
+                <div class="back-link" onclick="switchView('customers')">← Customers</div>
+                <h1 style="margin: 10px 0 5px 0;">Add Customer</h1>
+                <p class="date-sub" style="margin-bottom: 20px;">Save a customer and their subscription.</p>
+
+                <div class="form-container-card">
+                    <h3>Customer information</h3>
+                    <div class="form-group" style="margin-top: 12px;">
+                        <label>Full name</label>
+                        <input type="text" placeholder="Sarah Khan">
+                    </div>
+                    <div class="form-row" style="margin-top: 12px;">
+                        <div class="form-group">
+                            <label>Phone number</label>
+                            <input type="text" placeholder="+1 555 019 2210">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" placeholder="sarah@email.com">
+                        </div>
+                    </div>
+
+                    <h3 style="margin-top: 20px;">Subscription</h3>
+                    <div class="form-group" style="margin-top: 12px;">
+                        <label>Subscription start date</label>
+                        <input type="text" value="Oct 5, 2026">
+                    </div>
+
+                    <div class="expiry-calc-box">
+                        <span class="date-sub">Expiration date</span>
+                        <h3 style="color: #4f46e5; margin-top: 4px;">Jan 5, 2027 <span style="float: right; font-size: 12px; color: #6b7280; font-weight: normal;">Auto-calculated</span></h3>
+                    </div>
+
+                    <button class="btn-primary" style="width: 100%; margin-top: 20px; padding: 12px;" onclick="switchView('customers')">✓ Add Customer</button>
+                </div>
+            </section>
+
+            <!-- SETTINGS VIEW -->
+            <section id="settings-view" class="workspace-section">
+                <header class="top-bar">
+                    <div>
+                        <h1>Settings</h1>
+                        <p class="date-sub">Manage your account and password.</p>
+                    </div>
+                </header>
+
+                <div class="settings-card">
+                    <h3>Account</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" value="Alex Owner">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" value="owner@email.com">
+                        </div>
+                    </div>
+                    <button class="btn-primary">Save changes</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- MODALS -->
+    <div id="renew-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Renew subscription</h3>
+                <button class="close-btn" onclick="closeModal('renew-modal')">×</button>
+            </div>
+            <p class="modal-sub">John Smith</p>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('renew-modal')">Cancel</button>
+                <button class="btn-primary" onclick="closeModal('renew-modal')">Confirm renewal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="reminder-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Send reminder</h3>
+                <button class="close-btn" onclick="closeModal('reminder-modal')">×</button>
+            </div>
+            <p class="modal-sub">John Smith · +1 555 012 3456</p>
+            <div class="form-group" style="margin-top: 15px;">
+                <label>Message</label>
+                <textarea rows="4" class="form-control">Hi John, your TV subscription expires soon. Please renew.</textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal('reminder-modal')">Cancel</button>
+                <button class="btn-primary" onclick="closeModal('reminder-modal')">Copy message</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="delete-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Delete John Smith?</h3>
+                <button class="close-btn" onclick="closeModal('delete-modal')">×</button>
+            </div>
+            <p class="modal-sub" style="margin-top: 8px;">This permanently removes the customer and their subscription records.</p>
+            <div class="modal-footer" style="margin-top: 25px;">
+                <button class="btn-secondary" onclick="closeModal('delete-modal')">Cancel</button>
+                <button class="btn-danger" onclick="closeModal('delete-modal'); switchView('customers');">Delete customer</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
